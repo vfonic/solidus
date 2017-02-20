@@ -141,8 +141,8 @@ describe Spree::OrderContents, type: :model do
 
     context 'given quantity is not explicitly provided' do
       it 'should remove one line item' do
-        line_item = subject.add(variant, 3)
-        subject.remove(variant)
+        subject.add(variant, 3)
+        line_item = subject.remove(variant)
 
         expect(line_item.reload.quantity).to eq(2)
       end
@@ -167,8 +167,8 @@ describe Spree::OrderContents, type: :model do
     end
 
     it 'should reduce line_item quantity if quantity is less the line_item quantity' do
-      line_item = subject.add(variant, 3)
-      subject.remove(variant, 1)
+      subject.add(variant, 3)
+      line_item = subject.remove(variant, 1)
 
       expect(line_item.reload.quantity).to eq(2)
     end

@@ -95,7 +95,6 @@ module Spree
         variant: variant,
       )
 
-      line_item.quantity += quantity.to_i
       line_item.options = ActionController::Parameters.new(options).permit(PermittedAttributes.line_item_attributes).to_h
 
       if line_item.new_record?
@@ -103,21 +102,17 @@ module Spree
       end
 
       line_item.target_shipment = options[:shipment]
-      line_item.save!
+
+      line_item.adjust_quantity!(quantity)
       line_item
     end
 
     def remove_from_line_item(variant, quantity, options = {})
       line_item = grab_line_item_by_variant(variant, true, options)
-      line_item.quantity -= quantity
+
       line_item.target_shipment = options[:shipment]
 
-      if line_item.quantity == 0
-        order.line_items.destroy(line_item)
-      else
-        line_item.save!
-      end
-
+      line_item.adjust_quantity!(-quantity)
       line_item
     end
 

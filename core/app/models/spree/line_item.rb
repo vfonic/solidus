@@ -140,6 +140,18 @@ module Spree
         caller
     end
 
+    def adjust_quantity!(quantity)
+      normalize_quantity
+
+      self.quantity += quantity.to_i
+
+      if self.quantity <= 0
+        order.line_items.destroy(self)
+      else
+        save!
+      end
+    end
+
     private
 
     # Sets the quantity to zero if it is nil or less than zero.
