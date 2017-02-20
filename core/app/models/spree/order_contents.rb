@@ -20,12 +20,16 @@ module Spree
     #
     # @return [Spree::LineItem]
     def add(variant, quantity = 1, options = {})
-      line_item = add_to_line_item(variant, quantity, options)
+      quantity = quantity.to_i
+      quantity = 1 if quantity <= 0
+      line_item = add_to_line_item(variant, , options)
       after_add_or_remove(line_item, options)
     end
 
     def remove(variant, quantity = 1, options = {})
-      line_item = remove_from_line_item(variant, quantity, options)
+      quantity = quantity.to_i
+      quantity = 1 if quantity <= 0
+      line_item = remove_from_line_item(variant, quantity.to_i, options)
       after_add_or_remove(line_item, options)
     end
 
@@ -77,6 +81,12 @@ module Spree
       PromotionHandler::Cart.new(order, line_item).activate
       reload_totals
       line_item
+    end
+
+    def normalize_quantity(quantity)
+      quantity = quantity.to_i
+      quantity = 1 if quantity <= 0
+      quantity
     end
 
     def order_updater
