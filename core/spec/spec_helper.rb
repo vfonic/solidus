@@ -34,6 +34,7 @@ if ENV["CHECK_TRANSLATIONS"]
 end
 
 require 'spree/testing_support/factories'
+require 'spree/testing_support/paperclip'
 require 'spree/testing_support/preferences'
 require 'cancan/matchers'
 

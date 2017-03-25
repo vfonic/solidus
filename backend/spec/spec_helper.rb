@@ -33,6 +33,7 @@ require 'ffaker'
 
 require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/factories'
+require 'spree/testing_support/paperclip'
 require 'spree/testing_support/preferences'
 require 'spree/testing_support/controller_requests'
 require 'spree/testing_support/flash'
